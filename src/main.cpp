@@ -12,6 +12,10 @@
 #include "models/Aircraft.h"
 #include "models/TrackedAircraft.h"
 
+#ifdef ESP32C3_ELECROW
+#include "hal.h"
+#endif
+
 // Optional hard-coded Wi-Fi credentials. Leave both blank to skip pre-baking them and use the setup hotspot instead.
 const char* preconfiguredWifiSsid = "";
 const char* preconfiguredWifiPassword = "";
@@ -33,9 +37,20 @@ void setup()
 {
   Serial.begin(115200);
   // delay(1000); // avoids immediate serial output being cut off - uncomment if needed
-
+  #ifdef ESP32C3_ELECROW
+  Wire.begin(I2C_SDA, I2C_SCL);
+  init_IO_extender();
+  // delay(100);
+  set_pin_io(3, true);
+  set_pin_io(4, true);
+  set_pin_io(2, true);
+  tft.init();
+  tft.initDMA();
+  tft.startWrite();
+  #else
   // initialise LGFX + screen
   tft.init();
+  #endif
   tft.invertDisplay(true);
   pinMode(3, OUTPUT);
   digitalWrite(3, HIGH);
@@ -84,5 +99,7 @@ void loop()
 
   aircraftManager.Draw(backbuffer);
   backbuffer.pushSprite(0, 0);
+
+  delay(80);
 }
 
