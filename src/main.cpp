@@ -24,6 +24,9 @@ constexpr int SCREEN_SIZE = 240;
 constexpr int SCREEN_SIZE_DIV_2 = (SCREEN_SIZE / 2);
 
 LGFX tft;
+#ifdef ESP32C3_ELECROW
+CST816D touch(I2C_SDA, I2C_SCL, TP_RST, TP_INT);
+#endif
 LGFX_Sprite backbuffer(&tft);
 
 WiFiManager wm;
@@ -47,22 +50,25 @@ void setup()
   tft.init();
   tft.initDMA();
   tft.startWrite();
+  delay(200);
+  touch.begin();
   #else
   // initialise LGFX + screen
   tft.init();
   #endif
-  tft.invertDisplay(true);
+  
   pinMode(3, OUTPUT);
   digitalWrite(3, HIGH);
 
   backbuffer.setColorDepth(8);
   backbuffer.createSprite(SCREEN_SIZE, SCREEN_SIZE);
 
-  // establish WiFi connection
+  tft.invertDisplay(true);
   tft.fillScreen(lgfx::color888(0, 0, 0));
   tft.setTextColor(lgfx::color888(0, 255, 0));
   tft.drawCentreString("Connecting to WiFi...", SCREEN_SIZE / 2, SCREEN_SIZE / 2);
-
+  
+  // establish WiFi connection
   WiFiManagerHelpers::ConfigureWiFiManager(wm, tft);
 
   if (strlen(preconfiguredWifiSsid) > 0) {
