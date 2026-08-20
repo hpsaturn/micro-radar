@@ -44,7 +44,7 @@ class LGFX : public lgfx::LGFX_Device
         cfg.dummy_read_pixel = 8;
         cfg.dummy_read_bits = 1;
         cfg.readable = false;
-        cfg.invert = false;
+        cfg.invert = true;
         cfg.rgb_order = false;
         cfg.dlen_16bit = false;
         cfg.bus_shared = false;
@@ -79,6 +79,7 @@ public:
             cfg.pin_cs = 10;
             cfg.pin_rst = -1;
             cfg.pin_busy = -1;
+            cfg.invert = true;
             // cfg.rgb_order = true;
             _panel.config(cfg);
         }

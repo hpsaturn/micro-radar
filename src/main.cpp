@@ -55,14 +55,13 @@ void setup()
   #else
   // initialise LGFX + screen
   tft.init();
-  pinMode(3, OUTPUT);
-  digitalWrite(3, HIGH);
+  pinMode(3, OUTPUT);    
+  digitalWrite(3, HIGH); // TODO: this pin add 120mA on Crowpanel. Maybe in the default board?
   #endif
   
   backbuffer.setColorDepth(8);
   backbuffer.createSprite(SCREEN_SIZE, SCREEN_SIZE);
 
-  tft.invertDisplay(true);
   tft.fillScreen(lgfx::color888(0, 0, 0));
   tft.setTextColor(lgfx::color888(0, 255, 0));
   tft.drawCentreString("Connecting to WiFi...", SCREEN_SIZE / 2, SCREEN_SIZE / 2);
