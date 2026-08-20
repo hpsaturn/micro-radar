@@ -55,11 +55,10 @@ void setup()
   #else
   // initialise LGFX + screen
   tft.init();
-  #endif
-  
   pinMode(3, OUTPUT);
   digitalWrite(3, HIGH);
-
+  #endif
+  
   backbuffer.setColorDepth(8);
   backbuffer.createSprite(SCREEN_SIZE, SCREEN_SIZE);
 
