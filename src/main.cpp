@@ -55,8 +55,8 @@ void setup()
   #else
   // initialise LGFX + screen
   tft.init();
-  pinMode(3, OUTPUT);    
-  digitalWrite(3, HIGH); // TODO: this pin add 120mA on Crowpanel. Maybe in the default board?
+  pinMode(3, OUTPUT);    // TODO: This pin add 120mA on Crowpanel. Is only for the buzzer.
+  digitalWrite(3, HIGH); //       Maybe too in the default board? 
   #endif
   
   backbuffer.setColorDepth(8);
